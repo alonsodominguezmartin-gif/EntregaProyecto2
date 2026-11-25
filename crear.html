@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAcademia | Publicar Curso</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="header-container">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <span>EduAcademia</span>
+      </a>
+      <button id="mobile-menu-btn" class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <ul id="nav-links" class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="crear.html" class="active">Publicar Curso</a></li>
+        <li><a href="login.html">Iniciar Sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="form-card">
+      <h2 style="margin-bottom: 1.5rem;">Publicar Nuevo Curso o Asignatura</h2>
+      <form id="create-course-form" novalidate>
+        <div class="form-group">
+          <label for="title">Título del Curso</label>
+          <input type="text" id="title" class="form-control" data-validate="required|min:5" placeholder="Ej: Programación en Java Avanzado">
+          <div id="error-title" class="error-message" aria-live="polite"></div>
+        </div>
+        <div class="form-group">
+          <label for="category">Categoría</label>
+          <select id="category" class="form-control" data-validate="required">
+            <option value="">Selecciona una categoría...</option>
+            <option value="Desarrollo Web">Desarrollo Web</option>
+            <option value="Bases de Datos">Bases de Datos</option>
+            <option value="Cloud">Cloud</option>
+          </select>
+          <div id="error-category" class="error-message" aria-live="polite"></div>
+        </div>
+        <div class="form-group">
+          <label for="startDate">Fecha de Inicio de Convocatoria</label>
+          <input type="date" id="startDate" class="form-control" data-validate="required|futureDate">
+          <div id="error-startDate" class="error-message" aria-live="polite"></div>
+        </div>
+        <div class="form-group">
+          <label for="description">Descripción</label>
+          <textarea id="description" class="form-control" rows="4" data-validate="required|min:15" placeholder="Resumen detallado de contenidos y objetivos..."></textarea>
+          <div id="error-description" class="error-message" aria-live="polite"></div>
+        </div>
+        <div class="form-group">
+          <label for="price">Precio (€)</label>
+          <input type="number" step="0.01" id="price" class="form-control" data-validate="positiveNumber" placeholder="Ej: 49.99 (dejar vacío si es gratis)">
+          <div id="error-price" class="error-message" aria-live="polite"></div>
+        </div>
+        <div class="form-group">
+          <label for="image">URL de la Imagen Promocional (Opcional)</label>
+          <input type="url" id="image" class="form-control" data-validate="url" placeholder="https://images.unsplash.com/...">
+          <div id="error-image" class="error-message" aria-live="polite"></div>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%;">Guardar y Publicar</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 EduAcademia - Proyecto Interdisciplinar DAW Hito 2.</p>
+  </footer>
+
+  <script src="mockData.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduAcademia | Detalle del Curso</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="header-container">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <span>EduAcademia</span>
+      </a>
+      <button id="mobile-menu-btn" class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <ul id="nav-links" class="nav-links">
+        <li><a href="index.html">Volver al Inicio</a></li>
+        <li><a href="crear.html">Publicar Curso</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="course-detail-container" class="container">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+      <section style="grid-column: span 2;">
+        <img id="detail-image" src="" alt="Curso" style="width: 100%; border-radius: var(--radius-lg); max-height: 350px; object-fit: cover;">
+        <p id="detail-meta" style="margin-top: 1rem; font-size: 0.85rem; font-weight: 600; color: var(--brand-600);"></p>
+        <h1 id="detail-title" style="margin-top: 0.5rem; margin-bottom: 0.5rem; font-size: 1.75rem;"></h1>
+        <p id="detail-description" style="color: var(--slate-500); margin-bottom: 1.5rem;"></p>
+
+        <h3 style="margin-bottom: 1rem;">Plan de Estudios / Módulos</h3>
+        <ul id="detail-modules" style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;"></ul>
+      </section>
+
+      <aside style="background-color: white; padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--slate-200); height: fit-content;">
+        <h2 id="detail-price" style="color: var(--brand-600); font-size: 2rem; margin-bottom: 1rem;"></h2>
+        <button id="enroll-btn" type="button" class="btn-primary" style="width: 100%; margin-bottom: 1rem;">Inscribirme Ahora</button>
+        <ul style="list-style: none; font-size: 0.875rem; color: var(--slate-500); display: flex; flex-direction: column; gap: 0.5rem;">
+          <li>✔ Acceso de por vida al contenido</li>
+          <li>✔ Certificado oficial de finalización</li>
+          <li>✔ Soporte con tutor especializado</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 EduAcademia - Proyecto Interdisciplinar DAW Hito 2.</p>
+  </footer>
+
+  <script src="mockData.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

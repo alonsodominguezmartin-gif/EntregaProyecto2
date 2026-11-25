@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AprendeYa - Academia Online (Proyecto Interdisciplinar 2)</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome para iconografía profesional -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================================================
+           1. SISTEMA DE VARIABLES CSS (:root) - Guía de Estilos Figma / AprendeYa
+           ========================================================================== */
+        :root {
+            /* Paleta de Colores Primaria y Secundaria */
+            --primary-color: #2563eb;       /* Azul Royal */
+            --primary-hover: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary-color: #7c3aed;     /* Púrpura */
+            --secondary-hover: #6d28d9;
+            --accent-color: #059669;        /* Verde Éxito */
+            
+            /* Colores Neutros y de Fondo */
+            --bg-main: #f8fafc;             /* Fondo gris muy claro */
+            --bg-card: #ffffff;             /* Fondo de tarjetas/blanco */
+            --bg-alt: #f1f5f9;              /* Gris claro alternativo */
+            --border-color: #e2e8f0;        /* Color de bordes */
+            
+            /* Tipografía y Textos */
+            --text-primary: #0f172a;       /* Texto oscuro principal */
+            --text-secondary: #475569;     /* Texto secundario/subtítulos */
+            --text-muted: #94a3b8;         /* Texto deshabilitado o suave */
+            --text-white: #ffffff;
+            
+            /* Estados y Retroalimentación */
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+
+            /* Sombras, Bordes y Transiciones */
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+            /* Contenedores */
+            --max-width: 1280px;
+        }
+
+        /* Modo Oscuro Opcional / Preferencia del sistema */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-main: #0f172a;
+                --bg-card: #1e293b;
+                --bg-alt: #334155;
+                --border-color: #334155;
+                --text-primary: #f8fafc;
+                --text-secondary: #cbd5e1;
+                --text-muted: #64748b;
+            }
+        }
+
+        /* ==========================================================================
+           2. RESETS Y ESTILOS BASE
+           ========================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, input, select, textarea {
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ==========================================================================
+           3. NAVEGACIÓN Y HEADER SEMÁNTICO
+           ========================================================================== */
+        .header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header__container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .nav__list {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav__link {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav__link:hover, .nav__link.active {
+            color: var(--primary-color);
+            background-color: var(--primary-light);
+        }
+
+        .header__actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Selector de vista para facilitar la corrección del proyecto */
+        .demo-bar {
+            background-color: var(--text-primary);
+            color: var(--text-white);
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .demo-bar__buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .demo-btn:hover, .demo-btn.active {
+            background: var(--primary-color);
+        }
+
+        /* ==========================================================================
+           4. COMPONENTES Y BOTONES
+           ========================================================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn--primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn--primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn--secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn--secondary:hover {
+            background-color: var(--bg-alt);
+        }
+
+        .btn--accent {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn--accent:hover {
+            filter: brightness(0.9);
+        }
+
+        .btn--full {
+            width: 100%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge--primary { background: var(--primary-light); color: var(--primary-color); }
+        .badge--accent { background: #d1fae5; color: var(--accent-color); }
+        .badge--warning { background: #fef3c7; color: var(--warning-color); }
+
+        /* ==========================================================================
+           5. ESTRUCTURA PRINCIPAL DE VISTAS (PÁGINAS SIMULADAS)
+           ========================================================================== */
+        .main-container {
+            flex: 1;
+            max-width: var(--max-width);
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .page-view {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+           6. VISTA 1: DASHBOARD / INDEX (INDEX.HTML)
+           ========================================================================== */
+        /* Hero Banner */
+        .dashboard-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: var(--radius-lg);
+            padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-hero::after {
+            content: '';
+            position: absolute;
+            right: -50px;
+            bottom: -50px;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .dashboard-hero__title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .dashboard-hero__subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        /* GRID DE ESTADÍSTICAS DEL ESTUDIANTE */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-card__icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-md);
+            background: var(--primary-light);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-card__value {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .stat-card__label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* BARRA DE BÚSQUEDA Y FILTROS DE CURSOS */
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .controls-section {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 450px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .categories-filter {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* GRID DE TARJETAS DE CURSOS / CLASES */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .course-card__img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: var(--bg-alt);
+        }
+
+        .course-card__body {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .course-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .course-card__title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .course-card__description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .course-card__meta {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .course-card__price {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        /* ==========================================================================
+           7. VISTA 2: LOGIN & REGISTRO (LOGIN.HTML / REGISTRO.HTML)
+           ========================================================================== */
+        .auth-container {
+            max-width: 440px;
+            margin: 2rem auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .auth-switch span {
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* ==========================================================================
+           8. VISTA 3: CREAR NUEVO CURSO/EVENTO (CREAR.HTML)
+           ========================================================================== */
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .form-grid--2col {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* ==========================================================================
+           9. VISTA 4: DETALLE DEL CURSO (DETALLE.HTML)
+           ========================================================================== */
+        .course-detail {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        @media (min-width: 992px) {
+            .course-detail {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .detail-header {
+            margin-bottom: 2rem;
+        }
+
+        .detail-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .detail-banner {
+            width: 100%;
+            height: 350px;
+            border-radius: var(--radius-lg);
+            object-fit: cover;
+            margin-bottom: 2rem;
+        }
+
+        .modules-list {
+            margin-top: 1.5rem;
+        }
+
+        .module-item {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .module-header {
+            padding: 1rem 1.25rem;
+            background: var(--bg-alt);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .module-content {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .sidebar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            position: sticky;
+            top: 100px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .sidebar-price {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ==========================================================================
+           10. NOTIFICACIONES TOAST Y MODAL SIMULADO
+           ========================================================================== */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--text-primary);
+            color: var(--text-white);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ==========================================================================
+           11. FOOTER SEMÁNTICO
+           ========================================================================== */
+        .footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 1.5rem 1.5rem 1.5rem;
+            margin-top: auto;
+        }
+
+        .footer__container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer__col h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .footer__links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer__links a {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .footer__links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer__bottom {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA DE CONTROL PARA EVALUACIÓN DEL HITO 1 -->
+    <div class="demo-bar">
+        <span><i class="fa-solid fa-code"></i> <strong>AprendeYa (Hito 1 - Frontend DAW)</strong>: Simulador de navegación HTML5</span>
+        <div class="demo-bar__buttons">
+            <button class="demo-btn active" onclick="switchPage('index')">1. index.html</button>
+            <button class="demo-btn" onclick="switchPage('login')">2. login.html</button>
+            <button class="demo-btn" onclick="switchPage('registro')">2b. registro.html</button>
+            <button class="demo-btn" onclick="switchPage('crear')">3. crear.html</button>
+            <button class="demo-btn" onclick="switchPage('detalle')">4. detalle.html</button>
+        </div>
+    </div>
+
+    <!-- HEADER SEMÁNTICO Y NAVEGACIÓN -->
+    <header class="header">
+        <div class="header__container">
+            <div class="logo" onclick="switchPage('index')">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <span>AprendeYa</span>
+            </div>
+
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li><a class="nav__link active" id="nav-index" onclick="switchPage('index')"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                    <li><a class="nav__link" id="nav-crear" onclick="switchPage('crear')"><i class="fa-solid fa-plus-circle"></i> Publicar Curso</a></li>
+                </ul>
+            </nav>
+
+            <div class="header__actions">
+                <button class="btn btn--secondary" onclick="switchPage('login')">Acceder</button>
+                <button class="btn btn--primary" onclick="switchPage('registro')">Registrarse</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL MULTI-PÁGINA -->
+    <main class="main-container">
+
+        <!-- ===================================================================
+             PÁGINA 1: INDEX.HTML / DASHBOARD PRINCIPAL
+             =================================================================== -->
+        <section id="page-index" class="page-view active">
+            <!-- Banner Hero -->
+            <article class="dashboard-hero">
+                <span class="badge badge--accent" style="width: fit-content;">Plataforma Educativa DAW</span>
+                <h1 class="dashboard-hero__title">Potencia tu futuro profesional con AprendeYa</h1>
+                <p class="dashboard-hero__subtitle">Accede a cientos de cursos interactivos de programación, diseño e idiomas creados por expertos en la industria.</p>
+            </article>
+
+            <!-- Estadísticas del estudiante -->
+            <section class="stats-grid">
+                <article class="stat-card">
+                    <div class="stat-card__icon"><i class="fa-solid fa-book-open"></i></div>
+                    <div>
+                        <div class="stat-card__value">4</div>
+                        <div class="stat-card__label">Cursos Activos</div>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-card__icon"><i class="fa-solid fa-clock"></i></div>
+                    <div>
+                        <div class="stat-card__value">38h</div>
+                        <div class="stat-card__label">Horas de Estudio</div>
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-card__icon"><i class="fa-solid fa-certificate"></i></div>
+                    <div>
+                        <div class="stat-card__value">2</div>
+                        <div class="stat-card__label">Certificados</div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Filtros y Búsqueda -->
+            <section class="controls-section">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="course-search" placeholder="Buscar cursos por título, tecnología o profesor..." onkeyup="filterCourses()">
+                </div>
+
+                <div class="categories-filter">
+                    <button class="filter-btn active" onclick="filterCategory('all', this)">Todos</button>
+                    <button class="filter-btn" onclick="filterCategory('Programación', this)">Programación</button>
+                    <button class="filter-btn" onclick="filterCategory('Diseño', this)">Diseño</button>
+                    <button class="filter-btn" onclick="filterCategory('Idiomas', this)">Idiomas</button>
+                    <button class="filter-btn" onclick="filterCategory('Marketing', this)">Marketing</button>
+                </div>
+            </section>
+
+            <!-- Catálogo / Grid de Tarjetas -->
+            <section>
+                <div class="section-title">
+                    <h2>Cursos Disponibles</h2>
+                    <span id="courses-count" style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary);">Mostrando 4 cursos</span>
+                </div>
+
+                <div class="courses-grid" id="courses-container">
+                    <!-- Se renderiza dinámicamente mediante JS o estático para fallback -->
+                </div>
+            </section>
+        </section>
+
+
+        <!-- ===================================================================
+             PÁGINA 2A: LOGIN.HTML
+             =================================================================== -->
+        <section id="page-login" class="page-view">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2>¡Hola de nuevo!</h2>
+                    <p>Ingresa tus credenciales para acceder a tu panel de AprendeYa</p>
+                </div>
+
+                <form onsubmit="handleAuthSubmit(event, 'Inicio de sesión exitoso')">
+                    <div class="form-group">
+                        <label class="form-label" for="login-email">Correo Electrónico</label>
+                        <input type="email" id="login-email" class="form-input" placeholder="tu@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="login-password">Contraseña</label>
+                        <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--full">Iniciar Sesión</button>
+                </form>
+
+                <div class="auth-switch">
+                    ¿No tienes una cuenta? <span onclick="switchPage('registro')">Regístrate gratis</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ===================================================================
+             PÁGINA 2B: REGISTRO.HTML
+             =================================================================== -->
+        <section id="page-registro" class="page-view">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2>Crea tu Cuenta</h2>
+                    <p>Únete hoy a la comunidad de aprendizaje de AprendeYa</p>
+                </div>
+
+                <form onsubmit="handleAuthSubmit(event, 'Registro completado con éxito')">
+                    <div class="form-group">
+                        <label class="form-label" for="reg-name">Nombre Completo</label>
+                        <input type="text" id="reg-name" class="form-input" placeholder="Ej. Ana García" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="reg-email">Correo Electrónico</label>
+                        <input type="email" id="reg-email" class="form-input" placeholder="tu@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="reg-pass">Contraseña</label>
+                        <input type="password" id="reg-pass" class="form-input" placeholder="Mínimo 8 caracteres" minlength="8" required>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--full">Crear Cuenta</button>
+                </form>
+
+                <div class="auth-switch">
+                    ¿Ya tienes cuenta? <span onclick="switchPage('login')">Inicia Sesión</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ===================================================================
+             PÁGINA 3: CREAR.HTML (NUEVO CURSO / CLASE)
+             =================================================================== -->
+        <section id="page-crear" class="page-view">
+            <div class="form-container">
+                <div class="auth-header" style="text-align: left; margin-bottom: 1.5rem;">
+                    <h2>Publicar Nuevo Curso o Clase</h2>
+                    <p>Completa los datos para dar de alta un nuevo contenido en la plataforma</p>
+                </div>
+
+                <form id="create-course-form" onsubmit="handleCreateCourse(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="course-title">Título del Curso</label>
+                            <input type="text" id="course-title" class="form-input" placeholder="Ej: Desarrollo Web Avanzado con React" required>
+                        </div>
+
+                        <div class="form-grid form-grid--2col">
+                            <div class="form-group">
+                                <label class="form-label" for="course-category">Categoría</label>
+                                <select id="course-category" class="form-select" required>
+                                    <option value="">Selecciona una categoría</option>
+                                    <option value="Programación">Programación</option>
+                                    <option value="Diseño">Diseño UI/UX</option>
+                                    <option value="Idiomas">Idiomas</option>
+                                    <option value="Marketing">Marketing Digital</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="course-price">Precio (€)</label>
+                                <input type="number" id="course-price" class="form-input" placeholder="49.99" step="0.01" required>
+                            </div>
+                        </div>
+
+                        <div class="form-grid form-grid--2col">
+                            <div class="form-group">
+                                <label class="form-label" for="course-instructor">Instructor/a</label>
+                                <input type="text" id="course-instructor" class="form-input" placeholder="Tu nombre o departamento" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="course-duration">Duración Estimada</label>
+                                <input type="text" id="course-duration" class="form-input" placeholder="Ej: 20 Horas / 5 Semanas" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="course-image">URL de la Imagen de Portada</label>
+                            <input type="url" id="course-image" class="form-input" placeholder="https://images.unsplash.com/photo-..." required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="course-description">Descripción Detallada</label>
+                            <textarea id="course-description" class="form-textarea" rows="4" placeholder="Explica los objetivos, el temario básico y a quién va dirigido el curso..." required></textarea>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1rem;">
+                            <button type="button" class="btn btn--secondary" onclick="switchPage('index')">Cancelar</button>
+                            <button type="submit" class="btn btn--primary"><i class="fa-solid fa-paper-plane"></i> Publicar Curso</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+
+        <!-- ===================================================================
+             PÁGINA 4: DETALLE.HTML (DETALLE DEL ELEMENTO / CURSO)
+             =================================================================== -->
+        <section id="page-detalle" class="page-view">
+            <article class="course-detail">
+                <!-- Columna Izquierda: Información Principal -->
+                <div>
+                    <div class="detail-header">
+                        <span class="badge badge--primary" id="detail-category">Programación</span>
+                        <h1 class="detail-title" id="detail-title">Desarrollo Web Fullstack con JavaScript Nativo</h1>
+                        
+                        <div class="detail-meta">
+                            <span class="detail-meta-item"><i class="fa-solid fa-user-circle"></i> <span id="detail-instructor">Prof. Carlos Mendoza</span></span>
+                            <span class="detail-meta-item"><i class="fa-solid fa-clock"></i> <span id="detail-duration">45 Horas</span></span>
+                            <span class="detail-meta-item"><i class="fa-solid fa-star" style="color: var(--warning-color);"></i> 4.9 (128 Reseñas)</span>
+                        </div>
+                    </div>
+
+                    <img id="detail-img" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=60" alt="Curso Detalle" class="detail-banner">
+
+                    <section style="margin-bottom: 2rem;">
+                        <h3>Sobre este curso</h3>
+                        <p id="detail-description" style="margin-top: 0.75rem; color: var(--text-secondary);">
+                            Domina los fundamentos de desarrollo web cliente desde cero. Aprenderás maquetación semántica con HTML5, sistemas de diseño flexibles con CSS Grid y Flexbox, así como programación JS pura para cliente.
+                        </p>
+                    </section>
+
+                    <!-- Temario por módulos -->
+                    <section>
+                        <h3>Temario del Curso</h3>
+                        <div class="modules-list">
+                            <article class="module-item">
+                                <div class="module-header" onclick="toggleModule(this)">
+                                    <span>Módulo 1: HTML5 Semántico y Arquitectura Web</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <div class="module-content">
+                                    Estructuración de documentos, etiquetas de sección, accesibilidad web y mejores prácticas SEO.
+                                </div>
+                            </article>
+
+                            <article class="module-item">
+                                <div class="module-header" onclick="toggleModule(this)">
+                                    <span>Módulo 2: Estilos Modernos con CSS Grid y Flexbox</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <div class="module-content">
+                                    Estrategia Mobile First, variables CSS (:root), animaciones y diseño completamente responsive.
+                                </div>
+                            </article>
+
+                            <article class="module-item">
+                                <div class="module-header" onclick="toggleModule(this)">
+                                    <span>Módulo 3: Lógica Cliente con JavaScript (ES6+)</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                                <div class="module-content">
+                                    Manipulación del DOM, eventos, estado local y estructuración de aplicaciones Single Page (SPA).
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Columna Derecha / Sidebar Lateral de Inscripción -->
+                <aside>
+                    <div class="sidebar-card">
+                        <div class="sidebar-price" id="detail-price">59.99 €</div>
+                        
+                        <button class="btn btn--primary btn--full" style="margin-bottom: 1rem;" onclick="showToast('¡Inscripción realizada con éxito!')">
+                            <i class="fa-solid fa-bolt"></i> Inscribirse Ahora
+                        </button>
+                        
+                        <button class="btn btn--secondary btn--full" onclick="showToast('Añadido a lista de deseos')">
+                            <i class="fa-regular fa-bookmark"></i> Guardar en Favoritos
+                        </button>
+
+                        <div style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div><i class="fa-solid fa-check" style="color: var(--accent-color);"></i> Acceso de por vida</div>
+                            <div><i class="fa-solid fa-check" style="color: var(--accent-color);"></i> Certificado al finalizar</div>
+                            <div><i class="fa-solid fa-check" style="color: var(--accent-color);"></i> Tutorías personalizadas</div>
+                        </div>
+                    </div>
+                </aside>
+            </article>
+        </section>
+
+    </main>
+
+    <!-- FOOTER SEMÁNTICO -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__col">
+                <div class="logo" style="margin-bottom: 1rem;">
+                    <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <span>AprendeYa</span>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-secondary);">
+                    Plataforma e-learning desarrollada para el Proyecto Interdisciplinar 2 - Ciclo de Desarrollo de Aplicaciones Web (DAW).
+                </p>
+            </div>
+
+            <div class="footer__col">
+                <h4>Navegación</h4>
+                <ul class="footer__links">
+                    <li><a onclick="switchPage('index')">Inicio</a></li>
+                    <li><a onclick="switchPage('crear')">Publicar Curso</a></li>
+                    <li><a onclick="switchPage('login')">Acceso Alumnos</a></li>
+                </ul>
+            </div>
+
+            <div class="footer__col">
+                <h4>Categorías</h4>
+                <ul class="footer__links">
+                    <li><a href="#">Programación</a></li>
+                    <li><a href="#">Diseño UI/UX</a></li>
+                    <li><a href="#">Idiomas</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer__bottom">
+            <p>&copy; 2026 AprendeYa Academia - Desarrollado según especificaciones del Hito 1 (Frontend)</p>
+        </div>
+    </footer>
+
+    <!-- NOTIFICACIÓN TOAST SIMULADA -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-circle-check" style="color: var(--accent-color); font-size: 1.2rem;"></i>
+        <span id="toast-message">Acción completada con éxito</span>
+    </div>
+
+    <!-- ==========================================================================
+         LÓGICA JAVASCRIPT VANILLA (LOGICA CLIENTE Y CONTROL DE RUTAS SIMULADAS)
+         ========================================================================== -->
+    <script>
+        /* Datos Iniciales de Cursos */
+        let initialCourses = [
+            {
+                id: 1,
+                title: "Desarrollo Web Fullstack JavaScript",
+                category: "Programación",
+                instructor: "Carlos Mendoza",
+                duration: "45 Horas",
+                price: 59.99,
+                image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=60",
+                description: "Domina los fundamentos de desarrollo web cliente desde cero con HTML5, CSS3 Grid/Flexbox y JavaScript nativo."
+            },
+            {
+                id: 2,
+                title: "Diseño UI/UX Profesional con Figma",
+                category: "Diseño",
+                instructor: "Elena Rostova",
+                duration: "30 Horas",
+                price: 39.99,
+                image: "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&auto=format&fit=crop&q=60",
+                description: "Aprende a diseñar prototipos interactivos, sistemas de diseño y guiado de experiencia de usuario."
+            },
+            {
+                id: 3,
+                title: "Inglés Técnico para Programadores",
+                category: "Idiomas",
+                instructor: "David Smith",
+                duration: "25 Horas",
+                price: 29.99,
+                image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&auto=format&fit=crop&q=60",
+                description: "Prepara tus entrevistas de trabajo en inglés y redacta documentación clara para proyectos internacionales."
+            },
+            {
+                id: 4,
+                title: "Marketing Digital para Proyectos Web",
+                category: "Marketing",
+                instructor: "Laura Gómez",
+                duration: "20 Horas",
+                price: 34.99,
+                image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=60",
+                description: "Estrategias de SEO, analítica web y campañas digitales para dar a conocer tus desarrollos web."
+            }
+        ];
+
+        let selectedCategory = 'all';
+
+        /* 1. Renderizado Dinámico de Cursos */
+        function renderCourses(coursesToRender) {
+            const container = document.getElementById('courses-container');
+            const countText = document.getElementById('courses-count');
+            
+            if (!container) return;
+
+            container.innerHTML = '';
+            countText.textContent = `Mostrando ${coursesToRender.length} cursos`;
+
+            if (coursesToRender.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 3rem 0;">No se encontraron cursos que coincidan con la búsqueda.</p>`;
+                return;
+            }
+
+            coursesToRender.forEach(course => {
+                const card = document.createElement('article');
+                card.className = 'course-card';
+                card.onclick = () => openCourseDetail(course);
+
+                card.innerHTML = `
+                    <img src="${course.image}" alt="${course.title}" class="course-card__img" onerror="this.src='https://placehold.co/600x400/2563eb/ffffff?text=Curso+AprendeYa'">
+                    <div class="course-card__body">
+                        <div class="course-card__header">
+                            <span class="badge badge--primary">${course.category}</span>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${course.duration}</span>
+                        </div>
+                        <h3 class="course-card__title">${course.title}</h3>
+                        <p class="course-card__description">${course.description}</p>
+                        <div class="course-card__meta">
+                            <span><i class="fa-solid fa-chalkboard-user"></i> ${course.instructor}</span>
+                            <span class="course-card__price">${course.price} €</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        /* 2. Sistema de Búsqueda y Filtro por Categoria */
+        function filterCourses() {
+            const query = document.getElementById('course-search').value.toLowerCase();
+            const filtered = initialCourses.filter(course => {
+                const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
+                const matchesQuery = course.title.toLowerCase().includes(query) || 
+                                     course.description.toLowerCase().includes(query) ||
+                                     course.instructor.toLowerCase().includes(query);
+                return matchesCategory && matchesQuery;
+            });
+            renderCourses(filtered);
+        }
+
+        function filterCategory(cat, btn) {
+            selectedCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterCourses();
+        }
+
+        /* 3. Navegador Simulado (SPA) */
+        function switchPage(pageId) {
+            // Ocultar todas las vistas
+            document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
+            document.querySelectorAll('.demo-btn').forEach(btn => btn.classList.remove('active'));
+
+            // Mostrar vista seleccionada
+            const target = document.getElementById(`page-${pageId}`);
+            if (target) {
+                target.classList.add('active');
+            }
+
+            // Marcar botón activo en demo-bar
+            const activeDemoBtn = Array.from(document.querySelectorAll('.demo-btn')).find(b => b.textContent.toLowerCase().includes(pageId));
+            if (activeDemoBtn) activeDemoBtn.classList.add('active');
+
+            // Scroll arriba
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* 4. Abrir Detalle del Curso */
+        function openCourseDetail(course) {
+            document.getElementById('detail-title').textContent = course.title;
+            document.getElementById('detail-category').textContent = course.category;
+            document.getElementById('detail-instructor').textContent = course.instructor;
+            document.getElementById('detail-duration').textContent = course.duration;
+            document.getElementById('detail-price').textContent = `${course.price} €`;
+            document.getElementById('detail-description').textContent = course.description;
+            document.getElementById('detail-img').src = course.image;
+
+            switchPage('detalle');
+        }
+
+        /* 5. Desplegable de Módulos (Detalle) */
+        function toggleModule(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('i');
+            
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+                icon.className = 'fa-solid fa-chevron-down';
+            } else {
+                content.style.display = 'block';
+                icon.className = 'fa-solid fa-chevron-up';
+            }
+        }
+
+        /* 6. Alta de Nuevo Curso (Crear.html) */
+        function handleCreateCourse(e) {
+            e.preventDefault();
+
+            const newCourse = {
+                id: Date.now(),
+                title: document.getElementById('course-title').value,
+                category: document.getElementById('course-category').value,
+                price: parseFloat(document.getElementById('course-price').value),
+                instructor: document.getElementById('course-instructor').value,
+                duration: document.getElementById('course-duration').value,
+                image: document.getElementById('course-image').value,
+                description: document.getElementById('course-description').value
+            };
+
+            initialCourses.unshift(newCourse);
+            renderCourses(initialCourses);
+            showToast('¡Curso creado y publicado correctamente!');
+            document.getElementById('create-course-form').reset();
+            switchPage('index');
+        }
+
+        /* 7. Manejo de Formularios Login / Registro */
+        function handleAuthSubmit(e, message) {
+            e.preventDefault();
+            showToast(message);
+            switchPage('index');
+        }
+
+        /* 8. Feedback mediante Toast */
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        /* Inicialización al cargar la ventana */
+        window.onload = function() {
+            renderCourses(initialCourses);
+        };
+    </script>
+</body>
+</html>
